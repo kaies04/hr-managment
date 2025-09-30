@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     use HasFactory;
-     protected $fillable = [
-        'company_id', 'name', 'contact_number', 'email', 'status', 'location'
+    protected $fillable = [
+        'company_id',
+        'branch_name',
+        'contact_number',
+        'email',
+        'status',
+        'location'
     ];
 
     public function company()

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -51,7 +52,10 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
+            'org_name' => ['required', 'string', 'max:255'],
+            'org_contact_number' => ['required', 'string', 'max:255'],
+            'contact_number' => ['nullable', 'string', 'max:255'],
         ]);
     }
 
@@ -63,10 +67,51 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        DB::beginTransaction();
+
+        $organization = \App\Models\Organization::create([
+            'org_name' => $data['org_name'],
+            'org_email' => $data['email'],
+            'org_contact_number' => $data['org_contact_number'],
+            'org_status' => 'active',
         ]);
+
+        if ($organization) {
+
+            $company = \App\Models\Company::create([
+                'organization_id' => $organization->id,
+                'company_name' => $data['org_name'],
+                'company_email' => $data['email'],
+                'company_contact_number' => $data['org_contact_number'],
+                'company_status' => 'active',
+            ]);
+
+            if ($company) {
+                \App\Models\Branch::create([
+                    'company_id' => $company->id,
+                    'branch_name' => $data['org_name'] . ' Main Branch',
+                    'branch_email' => $data['email'],
+                    'branch_contact_number' => $data['org_contact_number'],
+                    'branch_status' => 'active',
+                ]);
+
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'contact_number' => $data['contact_number'] ?? null,
+                    'password' => Hash::make($data['password']),
+                    'organization_id' => $organization->id,
+                    'company_id' => $company->id,
+                ]);
+
+                if ($user) {
+                    $user->assignRole('super-admin');
+                }
+            }
+            // You can perform additional actions here if needed
+        }
+
+        DB::commit();
+        return $user;
     }
 }

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DepartmentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +19,9 @@ use App\Http\Controllers\OrganizationController;
 Route::get('/', function () {
     return view('welcome');
 });
- 
+
 Route::resource('organization', OrganizationController::class);
+Route::resource('department', DepartmentController::class);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

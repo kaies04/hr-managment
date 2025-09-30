@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,11 +13,11 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('contact_number')->nullable();
-            $table->string('email')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->string('location')->nullable();    
+            $table->string('branch_name');
+            $table->string('branch_contact_number')->nullable();
+            $table->string('branch_email')->nullable();
+            $table->enum('branch_status', ['active', 'inactive'])->default('active');
+            $table->string('branch_location')->nullable();
             $table->timestamps();
         });
     }
