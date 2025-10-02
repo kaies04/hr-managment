@@ -1,6 +1,81 @@
+@extends('layouts.master')
+
+@section('content')
+    <!-- Table Organization -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-default">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2>Organizations</h2>
+                    <a class="btn btn-primary btn-sm" href="{{ route('organization.create') }}">Add Organization</a>
+                </div>
+                <div class="card-body">
+                    <table id="organizationTable" class="table table-hover table-product" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact Number</th>
+                                <th>Subscription Plan</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($data as $organization)
+                                <tr>
+                                    <td>{{ $organization->id }}</td>
+                                    <td>{{ $organization->org_name }}</td>
+                                    <td>{{ $organization->org_email }}</td>
+                                    <td>{{ $organization->org_contact_number }}</td>
+                                    <td>{{ $organization->subscription_plan }}</td>
+                                    <td>{{ ucfirst($organization->status) }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
+                                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="{{ route('organization.edit', $organization->id) }}">Edit</a>
+                                                <form action="{{ route('organization.destroy', $organization->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item" onclick="return confirm('Delete this organization?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">No Organizations Found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+
+
+
+
+
+
+
+
+
 {{-- @extends('layouts.app')
 
-@section('content') --}}
+@section('content')
 <div class="container">
     <h2>Organizations</h2>
     <a href="{{ route('organization.create') }}" class="btn btn-primary mb-3">Add Organization</a>
@@ -60,4 +135,4 @@
         </tbody>
     </table>
 </div>
-{{-- @endsection --}}
+@endsection --}}

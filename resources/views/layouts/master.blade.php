@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
   <link href="{{asset('assets/plugins/material/css/materialdesignicons.min.css')}}" rel="stylesheet" />
   <link href="{{asset('assets/plugins/simplebar/simplebar.css')}}" rel="stylesheet" />
-
+ 
   <!-- PLUGINS CSS STYLE -->
   <link href="{{asset('assets/plugins/nprogress/nprogress.css')}}" rel="stylesheet" />
 
