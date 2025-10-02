@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee_Salary;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeSalaryController extends Controller
@@ -12,7 +13,8 @@ class EmployeeSalaryController extends Controller
      */
     public function index()
     {
-        //
+        $data=Employee_Salary::where('employee_id', auth()->user()->employee_id)->get();
+        return view('employee_salary.index', compact('data'));
     }
 
     /**
@@ -20,7 +22,7 @@ class EmployeeSalaryController extends Controller
      */
     public function create()
     {
-        //
+        return view('employee_salary.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class EmployeeSalaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'employee_id'   => 'required|exists:employees,id',
+            'basic_salary'  => 'required|numeric|min:0',
+            'allowances'    => 'nullable|numeric|min:0',
+            'pf_enabled'    => 'required|boolean',
+            'pf_percentage' => 'nullable|numeric|min:0|max:100',
+            'loan_active'   => 'required|boolean',
+        ]);
+
+        Employee_Salary::create($request->all());
+
+        return redirect()->route('employee_salary.index')->with('success', 'Employee salary created successfully.');
+    
     }
 
     /**
@@ -44,7 +58,7 @@ class EmployeeSalaryController extends Controller
      */
     public function edit(Employee_Salary $employee_Salary)
     {
-        //
+        return view('employee_salary.edit', compact('employee_salary'));
     }
 
     /**
@@ -52,7 +66,19 @@ class EmployeeSalaryController extends Controller
      */
     public function update(Request $request, Employee_Salary $employee_Salary)
     {
-        //
+         $request->validate([
+            'employee_id'   => 'required|exists:employees,id',
+            'basic_salary'  => 'required|numeric|min:0',
+            'allowances'    => 'nullable|numeric|min:0',
+            'pf_enabled'    => 'required|boolean',
+            'pf_percentage' => 'nullable|numeric|min:0|max:100',
+            'loan_active'   => 'required|boolean',
+        ]);
+
+        $employeeSalary->update($request->all());
+
+        return redirect()->route('employee_salary.index')->with('success', 'Employee salary updated successfully.');
+    
     }
 
     /**
@@ -60,6 +86,6 @@ class EmployeeSalaryController extends Controller
      */
     public function destroy(Employee_Salary $employee_Salary)
     {
-        //
+         
     }
 }

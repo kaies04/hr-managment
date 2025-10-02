@@ -12,7 +12,8 @@ class BranchController extends Controller
      */
     public function index()
     {
-        //
+        $data=Branch::where('company_id',auth()->user()->company_id)->get();
+        return view('Branch.index',compact('data'));
     }
 
     /**
@@ -20,7 +21,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        return view('Branch.create');
     }
 
     /**
@@ -28,7 +29,19 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+          Department::create([
+            'company_id' => auth()->user()->company_id,
+            'name' => $request->name,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('Branch.index')->with('success', 'Branch created successfully.');
+
     }
 
     /**
@@ -36,7 +49,7 @@ class BranchController extends Controller
      */
     public function show(Branch $branch)
     {
-        //
+         //
     }
 
     /**
@@ -44,7 +57,7 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        //
+        return view('Branch.edit', compact('branch'));
     }
 
     /**
@@ -52,7 +65,17 @@ class BranchController extends Controller
      */
     public function update(Request $request, Branch $branch)
     {
-        //
+            $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $department->update([
+            'name' => $request->name,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('Branch.index')->with('success', 'Branch updated successfully.');
     }
 
     /**

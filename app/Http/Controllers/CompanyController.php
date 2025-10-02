@@ -12,7 +12,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+         $data = Company::where('organization_id', auth()->user()->organization_id)->get();
+        return view('Company.index', compact('data'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+       return view(('Company.create'));
     }
 
     /**
@@ -28,7 +29,15 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|in:active,inactive',
+        ]);
+        Company::create([
+            'organization_id' => auth()->user()->organization_id,
+            'name' => $request->name,
+            'status' => $request->status,
+        ]);
     }
 
     /**
@@ -44,7 +53,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view('Company.edit', compact('Company'));
     }
 
     /**
@@ -52,7 +61,17 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $department->update([
+            'name' => $request->name,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('department.index')->with('success', 'Company updated successfully.');
     }
 
     /**

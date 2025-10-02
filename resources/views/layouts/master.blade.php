@@ -241,7 +241,7 @@
 
 
                   <li>
-                    <a class="sidenav-item-link" href="badge.html">
+                    <a class="sidenav-item-link" href="{{('department.index')}}">
                       <span class="nav-text">Badge</span>
 
                     </a>

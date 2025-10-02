@@ -35,7 +35,7 @@ class DepartmentController extends Controller
         ]);
 
         Department::create([
-            'company_id' => auth()->user()->company_id,
+            'company_id' => auth()->user->company_id,
             'name' => $request->name,
             'status' => $request->status,
         ]);

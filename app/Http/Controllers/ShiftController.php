@@ -12,7 +12,8 @@ class ShiftController extends Controller
      */
     public function index()
     {
-        //
+        $data = Shift::where('company_id',auth()->user()->company_id)->get();
+        return view('shift.index',compact('data')); 
     }
 
     /**
@@ -20,7 +21,7 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        //
+        return view('shift.create');
     }
 
     /**
@@ -28,7 +29,21 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'       => 'required|string|max:255',
+            'start_time' => 'required|date_format:H:i',
+            'end_time'   => 'required|date_format:H:i|after:start_time',
+        ]);
+
+        Shift::create([
+            'company_id' => auth()->user()->company_id,
+            'name'       => $request->name,
+            'start_time' => $request->start_time,
+            'end_time'   => $request->end_time,
+        ]);
+
+        return redirect()->route('shift.index')->with('success', 'Shift created successfully.');
+   
     }
 
     /**
@@ -44,7 +59,7 @@ class ShiftController extends Controller
      */
     public function edit(Shift $shift)
     {
-        //
+          return view('shift.edit', compact('shift'));
     }
 
     /**
@@ -52,7 +67,19 @@ class ShiftController extends Controller
      */
     public function update(Request $request, Shift $shift)
     {
-        //
+           $request->validate([
+            'name'       => 'required|string|max:255',
+            'start_time' => 'required|date_format:H:i',
+            'end_time'   => 'required|date_format:H:i|after:start_time',
+        ]);
+
+        $shift->update([
+            'name'       => $request->name,
+            'start_time' => $request->start_time,
+            'end_time'   => $request->end_time,
+        ]);
+
+        return redirect()->route('shift.index')->with('success', 'Shift updated successfully.');
     }
 
     /**
