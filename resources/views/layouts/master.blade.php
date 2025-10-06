@@ -112,51 +112,51 @@
 
 
 
-            <li>
+            {{-- <li>
               <a class="sidenav-item-link" href="chat.html">
                 <i class="mdi mdi-wechat"></i>
                 <span class="nav-text">Chat</span>
               </a>
-            </li>
+            </li> --}}
 
 
 
 
 
-            <li>
+            {{-- <li>
               <a class="sidenav-item-link" href="contacts.html">
                 <i class="mdi mdi-phone"></i>
                 <span class="nav-text">Contacts</span>
               </a>
-            </li>
+            </li> --}}
 
 
 
 
-
+{{-- 
             <li>
               <a class="sidenav-item-link" href="team.html">
                 <i class="mdi mdi-account-group"></i>
                 <span class="nav-text">Team</span>
               </a>
-            </li>
+            </li> --}}
 
 
 
 
 
-            <li>
+            {{-- <li>
               <a class="sidenav-item-link" href="calendar.html">
                 <i class="mdi mdi-calendar-check"></i>
                 <span class="nav-text">Calendar</span>
               </a>
-            </li>
+            </li> --}}
 
 
 
 
 
-            <li class="has-sub">
+            {{-- <li class="has-sub">
               <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email"
                 aria-expanded="false" aria-controls="email">
                 <i class="mdi mdi-email"></i>
@@ -203,7 +203,7 @@
 
                 </div>
               </ul>
-            </li>
+            </li> --}}
 
 
 
@@ -230,7 +230,17 @@
 
                   <li>
                     <a class="sidenav-item-link" href="{{route('organization.index')}}">
-                      <span class="nav-text">Alert</span>
+                      <span class="nav-text">Organization</span>
+
+                    </a>
+                  </li>
+
+
+
+                  
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('companies.index')}}">
+                      <span class="nav-text">companies</span>
 
                     </a>
                   </li>
@@ -241,8 +251,8 @@
 
 
                   <li>
-                    <a class="sidenav-item-link" href="{{('department.index')}}">
-                      <span class="nav-text">Badge</span>
+                    <a class="sidenav-item-link" href="{{route('branch.index')}}">
+                      <span class="nav-text">Branch</span>
 
                     </a>
                   </li>
@@ -253,8 +263,35 @@
 
 
                   <li>
-                    <a class="sidenav-item-link" href="breadcrumb.html">
-                      <span class="nav-text">Breadcrumb</span>
+                    <a class="sidenav-item-link" href="{{route('designations.index')}}">
+                      <span class="nav-text">designations</span>
+
+                    </a>
+                  </li>
+                  
+
+                  
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('employee-salaries.index')}}">
+                      <span class="nav-text">employee-salaries</span>
+
+                    </a>
+                  </li>
+
+
+
+                  
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('employees.index')}}">
+                      <span class="nav-text">employees</span>
+
+                    </a>
+                  </li>
+
+
+                      <li>
+                    <a class="sidenav-item-link" href="{{route('shifts.index')}}">
+                      <span class="nav-text">shifts</span>
 
                     </a>
                   </li>
