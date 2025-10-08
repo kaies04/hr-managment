@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
   <link href="{{asset('assets/plugins/material/css/materialdesignicons.min.css')}}" rel="stylesheet" />
   <link href="{{asset('assets/plugins/simplebar/simplebar.css')}}" rel="stylesheet" />
- 
+
   <!-- PLUGINS CSS STYLE -->
   <link href="{{asset('assets/plugins/nprogress/nprogress.css')}}" rel="stylesheet" />
 
@@ -83,127 +83,69 @@
 
 
             <li class="active">
-              <a class="sidenav-item-link" href="index.html">
+              <a class="sidenav-item-link" href="{{route('dashboard')}}">
                 <i class="mdi mdi-briefcase-account-outline"></i>
-                <span class="nav-text">Business Dashboard</span>
+                <span class="nav-text">Dashboard</span>
               </a>
             </li>
-
-
-
-
-
-            <li>
-              <a class="sidenav-item-link" href="analytics.html">
-                <i class="mdi mdi-chart-line"></i>
-                <span class="nav-text">Analytics Dashboard</span>
+            <li class="has-sub">
+              <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#setting"
+                aria-expanded="false" aria-controls="setting">
+                <i class="mdi mdi-cog"></i>
+                <span class="nav-text">Settings</span> <b class="caret"></b>
               </a>
-            </li>
-
-
-
-
-
-            <li class="section-title">
-              Apps
-            </li>
-
-
-
-
-
-            {{-- <li>
-              <a class="sidenav-item-link" href="chat.html">
-                <i class="mdi mdi-wechat"></i>
-                <span class="nav-text">Chat</span>
-              </a>
-            </li> --}}
-
-
-
-
-
-            {{-- <li>
-              <a class="sidenav-item-link" href="contacts.html">
-                <i class="mdi mdi-phone"></i>
-                <span class="nav-text">Contacts</span>
-              </a>
-            </li> --}}
-
-
-
-
-{{-- 
-            <li>
-              <a class="sidenav-item-link" href="team.html">
-                <i class="mdi mdi-account-group"></i>
-                <span class="nav-text">Team</span>
-              </a>
-            </li> --}}
-
-
-
-
-
-            {{-- <li>
-              <a class="sidenav-item-link" href="calendar.html">
-                <i class="mdi mdi-calendar-check"></i>
-                <span class="nav-text">Calendar</span>
-              </a>
-            </li> --}}
-
-
-
-
-
-            {{-- <li class="has-sub">
-              <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email"
-                aria-expanded="false" aria-controls="email">
-                <i class="mdi mdi-email"></i>
-                <span class="nav-text">email</span> <b class="caret"></b>
-              </a>
-              <ul class="collapse" id="email" data-parent="#sidebar-menu">
+              <ul class="collapse" id="setting" data-parent="#sidebar-menu">
                 <div class="sub-menu">
-
-
+                    <li>
+                        <a class="sidenav-item-link" href="{{route('shift.index')}}">
+                            <span class="nav-text">Shift</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidenav-item-link" href="email-details.html">
+                            <span class="nav-text">Email Details</span>
+                        </a>
+                    </li>
 
                   <li>
-                    <a class="sidenav-item-link" href="email-inbox.html">
-                      <span class="nav-text">Email Inbox</span>
+                    <a class="sidenav-item-link" href="{{route('organization.index')}}">
+                      <span class="nav-text">Organization</span>
 
                     </a>
                   </li>
-
-
-
-
-
-
                   <li>
-                    <a class="sidenav-item-link" href="email-details.html">
-                      <span class="nav-text">Email Details</span>
+                    <a class="sidenav-item-link" href="{{route('company.index')}}">
+                      <span class="nav-text">companies</span>
 
                     </a>
                   </li>
-
-
-
-
-
-
                   <li>
-                    <a class="sidenav-item-link" href="email-compose.html">
-                      <span class="nav-text">Email Compose</span>
+                    <a class="sidenav-item-link" href="{{route('branch.index')}}">
+                      <span class="nav-text">Branch</span>
 
                     </a>
                   </li>
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('designation.index')}}">
+                      <span class="nav-text">designations</span>
 
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('employee-salaries.index')}}">
+                      <span class="nav-text">employee-salaries</span>
 
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('employee.index')}}">
+                      <span class="nav-text">employees</span>
 
-
+                    </a>
+                  </li>
                 </div>
               </ul>
-            </li> --}}
+            </li>
 
 
 
@@ -228,69 +170,10 @@
 
 
 
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('organization.index')}}">
-                      <span class="nav-text">Organization</span>
-
-                    </a>
-                  </li>
-
-
-
-                  
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('companies.index')}}">
-                      <span class="nav-text">companies</span>
-
-                    </a>
-                  </li>
-
-
-
-
-
-
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('branch.index')}}">
-                      <span class="nav-text">Branch</span>
-
-                    </a>
-                  </li>
-
-
-
-
-
-
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('designations.index')}}">
-                      <span class="nav-text">designations</span>
-
-                    </a>
-                  </li>
-                  
-
-                  
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('employee-salaries.index')}}">
-                      <span class="nav-text">employee-salaries</span>
-
-                    </a>
-                  </li>
-
-
-
-                  
-                  <li>
-                    <a class="sidenav-item-link" href="{{route('employees.index')}}">
-                      <span class="nav-text">employees</span>
-
-                    </a>
-                  </li>
 
 
                       <li>
-                    <a class="sidenav-item-link" href="{{route('shifts.index')}}">
+                    <a class="sidenav-item-link" href="{{route('shift.index')}}">
                       <span class="nav-text">shifts</span>
 
                     </a>

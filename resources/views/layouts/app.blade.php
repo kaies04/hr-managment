@@ -41,10 +41,10 @@
 </head>
 
 <body class="bg-light-gray" id="body">
-    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="container " style="min-height: 100vh">
         <div class="d-flex flex-column justify-content-between">
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-xl-5 col-md-10 ">
+                <div class="col-lg-8 col-xl-8 col-md-12 ">
                     <div class="card card-default mb-0">
                         <div class="card-header pb-0">
                             <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">

@@ -10,18 +10,6 @@
             <div class="card-body">
                 <form action="{{ route('shift.store') }}" method="POST">
                     @csrf
-
-                    {{-- Company --}}
-                    <div class="form-group">
-                        <label for="company_id">Company</label>
-                        <select class="form-control" id="company_id" name="company_id" required>
-                            <option value="">Select Company</option>
-                            @foreach($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     {{-- Shift Name --}}
                     <div class="form-group">
                         <label for="name">Shift Name</label>

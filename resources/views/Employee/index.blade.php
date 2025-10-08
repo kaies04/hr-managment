@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($employees as $employee)
+                        @forelse($data as $employee)
                             <tr>
                                 <td>{{ $employee->id }}</td>
                                 <td>{{ $employee->name }}</td>

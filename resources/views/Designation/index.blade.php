@@ -13,18 +13,14 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Company</th>
-                            <th>Department</th>
                             <th>Title</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($designations as $designation)
+                        @forelse($data as $designation)
                             <tr>
                                 <td>{{ $designation->id }}</td>
-                                <td>{{ $designation->company->company_name }}</td>
-                                <td>{{ $designation->department->name }}</td>
                                 <td>{{ $designation->title }}</td>
                                 <td>
                                     <a href="{{ route('designation.edit', $designation->id) }}" class="btn btn-warning btn-sm">

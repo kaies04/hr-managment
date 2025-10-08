@@ -18,10 +18,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $data=Employee::where('branch_id',auth()->user()->branch_id)
-        ->where('department_id',auth()->user()->department_id)
-        ->where('designation_id',auth()->user()->designation_id)->get();
-        return view('employee.index');
+        $data=Employee::where('company_id',auth()->user()->company_id)->get();
+        return view('employee.index',compact('data'));
     }
 
     /**
@@ -29,7 +27,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employee.create');
+        $branches = Branch::all();
+        $departments = Department::all();
+        $designations = Designation::all();
+        $shifts = Shift::all();
+        return view('employee.create', compact('branches', 'departments', 'designations', 'shifts'));
     }
 
     /**
@@ -53,11 +55,12 @@ class EmployeeController extends Controller
             'join_date'      => 'required|date',
             'status'         => 'required|in:active,inactive',
         ]);
+        $request->merge(['company_id' => auth()->user()->company_id]);
 
         Employee::create($request->all());
 
         return redirect()->route('employee.index')->with('success', 'Employee created successfully.');
-   
+
     }
 
     /**
@@ -79,7 +82,7 @@ class EmployeeController extends Controller
         $shifts = Shift::all();
 
         return view('employee.edit', compact('employee', 'branches', 'departments', 'designations', 'shifts'));
-  
+
     }
 
     /**
@@ -107,7 +110,7 @@ class EmployeeController extends Controller
         $employee->update($request->all());
 
         return redirect()->route('employee.index')->with('success', 'Employee updated successfully.');
-    
+
     }
 
     /**

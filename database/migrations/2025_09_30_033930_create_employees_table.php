@@ -13,12 +13,22 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
-            $table->decimal('basic_salary', 12, 2);
-            $table->decimal('allowances', 12, 2)->default(0);
-            $table->boolean('pf_enabled')->default(false);
-            $table->decimal('pf_percentage', 5, 2)->default(0);
-            $table->boolean('loan_active')->default(false);
+            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('designation_id');
+            $table->unsignedBigInteger('shift_id');
+            $table->string('name');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('education')->nullable();
+            $table->string('skill')->nullable();
+            $table->date('join_date');
+            $table->enum('status', ['active', 'probation', 'resigned', 'terminated'])->default('active');
+
             $table->timestamps();
         });
     }

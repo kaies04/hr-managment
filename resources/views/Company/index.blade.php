@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($companies as $company)
+                        @forelse($data as $company)
                         <tr>
                             <td>{{ $company->id }}</td>
                             <td>{{ $company->company_name }}</td>

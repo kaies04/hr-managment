@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($branches as $branch)
+                            @forelse($data as $branch)
                                 <tr>
                                     <td>{{ $branch->id }}</td>
                                     <td>{{ $branch->company->name ?? 'N/A' }}</td>

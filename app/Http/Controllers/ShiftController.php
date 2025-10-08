@@ -13,7 +13,7 @@ class ShiftController extends Controller
     public function index()
     {
         $data = Shift::where('company_id',auth()->user()->company_id)->get();
-        return view('shift.index',compact('data')); 
+        return view('shift.index',compact('data'));
     }
 
     /**
@@ -43,7 +43,7 @@ class ShiftController extends Controller
         ]);
 
         return redirect()->route('shift.index')->with('success', 'Shift created successfully.');
-   
+
     }
 
     /**
@@ -68,9 +68,9 @@ class ShiftController extends Controller
     public function update(Request $request, Shift $shift)
     {
            $request->validate([
-            'name'       => 'required|string|max:255',
-            'start_time' => 'required|date_format:H:i',
-            'end_time'   => 'required|date_format:H:i|after:start_time',
+            'name'       => 'required',
+            'start_time' => 'required',
+            'end_time'   => 'required',
         ]);
 
         $shift->update([

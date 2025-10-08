@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
@@ -9,9 +10,7 @@ use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\DepartmentController;
-
 use Illuminate\Support\Facades\Auth;
-
 
 
 /*
@@ -25,27 +24,29 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::resource('organization', OrganizationController::class);
-Route::resource('department', DepartmentController::class);
-Route::resource('branch', BranchController::class);
-
- Route::resource('companies', CompanyController::class);
-// Designation CRUD routes
-Route::resource('designations', DesignationController::class);
-
-// Employee Salary CRUD routes
-Route::resource('employee-salaries', EmployeeSalaryController::class);
-
-// Employee CRUD routes
-Route::resource('employees', EmployeeController::class);
-
-// Shift CRUD routes
-Route::resource('shifts', ShiftController::class);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth:web')->group(function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::resource('organization', OrganizationController::class);
+    Route::resource('department', DepartmentController::class);
+    Route::resource('branch', BranchController::class);
+
+    Route::resource('company', CompanyController::class);
+    // Designation CRUD routes
+    Route::resource('designation', DesignationController::class);
+
+    // Employee Salary CRUD routes
+    Route::resource('employee-salaries', EmployeeSalaryController::class);
+
+    // Employee CRUD routes
+    Route::resource('employee', EmployeeController::class);
+
+    // Shift CRUD routes
+    Route::resource('shift', ShiftController::class);
+});

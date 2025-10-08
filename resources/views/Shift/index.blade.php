@@ -21,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($shifts as $shift)
+                        @forelse($data as $shift)
                             <tr>
                                 <td>{{ $shift->id }}</td>
                                 <td>{{ $shift->name }}</td>
