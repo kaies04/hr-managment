@@ -49,6 +49,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -57,6 +58,7 @@ class RegisterController extends Controller
             'org_contact_number' => ['required', 'string', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:255'],
         ]);
+
     }
 
     /**
@@ -109,6 +111,7 @@ class RegisterController extends Controller
                 }
             }
             // You can perform additional actions here if needed
+            
         }
 
         DB::commit();

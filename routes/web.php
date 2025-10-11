@@ -10,6 +10,12 @@ use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\DepartmentController;
+// use App\Http\Controllers\AttendanceController;
+// use App\Http\Controllers\LeaveController;
+// use App\Http\Controllers\PayrollController;
+// use App\Http\Controllers\ProvidentFundController;
+// use App\Http\Controllers\LoanController;
+// use App\Http\Controllers\BonusController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -49,4 +55,26 @@ Route::middleware('auth:web')->group(function () {
 
     // Shift CRUD routes
     Route::resource('shift', ShiftController::class);
+
+
+
+    //  // Attendance CRUD routes
+    // Route::resource('attendances', AttendanceController::class);
+
+    // // Leave CRUD routes
+    // Route::resource('leaves', LeaveController::class);
+
+    // // Payroll CRUD routes
+    // Route::resource('payrolls', PayrollController::class);
+
+    // // Provident Fund CRUD routes
+    // Route::resource('provident-funds', ProvidentFundController::class);
+
+    // // Loan CRUD routes
+    // Route::resource('loans', LoanController::class);
+
+    // // Bonus CRUD routes
+    // Route::resource('bonuses', BonusController::class);
+
+
 });

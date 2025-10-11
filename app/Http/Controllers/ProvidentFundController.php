@@ -12,7 +12,8 @@ class ProvidentFundController extends Controller
      */
     public function index()
     {
-        //
+        $data = ProvidentFund::with('employee')->get();
+        return view('providentfund.index', compact('data'));
     }
 
     /**
@@ -20,7 +21,8 @@ class ProvidentFundController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::all();
+        return view('providentfund.create', compact('employees'));
     }
 
     /**
@@ -28,7 +30,22 @@ class ProvidentFundController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'employee_id'         => 'required|exists:employees,id',
+            'month'               => 'required|string|max:20',
+            'year'                => 'required|digits:4|integer',
+            'contribution_amount' => 'required|numeric|min:0',
+        ]);
+
+        ProvidentFund::create([
+            'employee_id'         => $request->employee_id,
+            'month'               => $request->month,
+            'year'                => $request->year,
+            'contribution_amount' => $request->contribution_amount,
+        ]);
+
+        return redirect()->route('providentfund.index')->with('success', 'Provident Fund created successfully.');
+   
     }
 
     /**
@@ -44,7 +61,9 @@ class ProvidentFundController extends Controller
      */
     public function edit(ProvidentFund $providentFund)
     {
-        //
+        $employees = Employee::all();
+        return view('providentfund.edit', compact('providentfund', 'employees'));
+   
     }
 
     /**
@@ -52,7 +71,22 @@ class ProvidentFundController extends Controller
      */
     public function update(Request $request, ProvidentFund $providentFund)
     {
-        //
+         $request->validate([
+            'employee_id'         => 'required|exists:employees,id',
+            'month'               => 'required|string|max:20',
+            'year'                => 'required|digits:4|integer',
+            'contribution_amount' => 'required|numeric|min:0',
+        ]);
+
+        $providentfund->update([
+            'employee_id'         => $request->employee_id,
+            'month'               => $request->month,
+            'year'                => $request->year,
+            'contribution_amount' => $request->contribution_amount,
+        ]);
+
+        return redirect()->route('providentfund.index')->with('success', 'Provident Fund updated successfully.');
+   
     }
 
     /**
@@ -60,6 +94,8 @@ class ProvidentFundController extends Controller
      */
     public function destroy(ProvidentFund $providentFund)
     {
-        //
+        $providentfund->delete();
+        return redirect()->route('providentfund.index')->with('success', 'Provident Fund deleted successfully.');
+   
     }
 }

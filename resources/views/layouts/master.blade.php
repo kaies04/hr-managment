@@ -143,6 +143,42 @@
 
                     </a>
                   </li>
+                  {{-- <li>
+                    <a class="sidenav-item-link" href="{{route('attendance.index')}}">
+                      <span class="nav-text">attendance</span>
+
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="{{route('bonus.index')}}">
+                      <span class="nav-text">bonus</span>
+
+                    </a>
+                  </li>
+                   <li>
+                    <a class="sidenav-item-link" href="{{route('leave.index')}}">
+                      <span class="nav-text">leave</span>
+
+                    </a>
+                  </li>
+                   <li>
+                    <a class="sidenav-item-link" href="{{route('loan.index')}}">
+                      <span class="nav-text">loan</span>
+
+                    </a>
+                  </li>
+                   <li>
+                    <a class="sidenav-item-link" href="{{route('payroll.index')}}">
+                      <span class="nav-text">payroll</span>
+
+                    </a>
+                  </li>
+                   <li>
+                    <a class="sidenav-item-link" href="{{route('providentfund.index')}}">
+                      <span class="nav-text">providentfund</span>
+
+                    </a>
+                  </li> --}}
                 </div>
               </ul>
             </li>

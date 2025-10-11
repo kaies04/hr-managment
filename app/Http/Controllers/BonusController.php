@@ -12,7 +12,8 @@ class BonusController extends Controller
      */
     public function index()
     {
-        //
+         $data = Leave::with('employee')->get();
+        return view('leave.index', compact('data'));
     }
 
     /**
@@ -20,7 +21,8 @@ class BonusController extends Controller
      */
     public function create()
     {
-        //
+         $employees = Employee::all();
+        return view('leave.create', compact('employees'));
     }
 
     /**
@@ -28,7 +30,24 @@ class BonusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'leave_type'  => 'required|in:Casual,Sick,Unpaid',
+            'start_date'  => 'required|date',
+            'end_date'    => 'required|date|after_or_equal:start_date',
+            'status'      => 'required|in:Pending,Approved,Rejected',
+        ]);
+
+        Leave::create([
+            'employee_id' => $request->employee_id,
+            'leave_type'  => $request->leave_type,
+            'start_date'  => $request->start_date,
+            'end_date'    => $request->end_date,
+            'status'      => $request->status,
+        ]);
+
+        return redirect()->route('leave.index')->with('success', 'Leave created successfully.');
+   
     }
 
     /**
@@ -44,7 +63,8 @@ class BonusController extends Controller
      */
     public function edit(Bonus $bonus)
     {
-        //
+        $employees = Employee::all();
+        return view('leave.edit', compact('leave', 'employees'));
     }
 
     /**
@@ -52,7 +72,24 @@ class BonusController extends Controller
      */
     public function update(Request $request, Bonus $bonus)
     {
-        //
+         $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'leave_type'  => 'required|in:Casual,Sick,Unpaid',
+            'start_date'  => 'required|date',
+            'end_date'    => 'required|date|after_or_equal:start_date',
+            'status'      => 'required|in:Pending,Approved,Rejected',
+        ]);
+
+        $leave->update([
+            'employee_id' => $request->employee_id,
+            'leave_type'  => $request->leave_type,
+            'start_date'  => $request->start_date,
+            'end_date'    => $request->end_date,
+            'status'      => $request->status,
+        ]);
+
+        return redirect()->route('leave.index')->with('success', 'Leave updated successfully.');
+   
     }
 
     /**
@@ -60,6 +97,7 @@ class BonusController extends Controller
      */
     public function destroy(Bonus $bonus)
     {
-        //
+         $leave->delete();
+        return redirect()->route('leave.index')->with('success', 'Leave deleted successfully.');
     }
 }

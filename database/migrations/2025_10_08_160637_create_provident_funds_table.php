@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('provident_funds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->string('month');
+            $table->year('year');
+            $table->decimal('contribution_amount', 12, 2)->default(0);
             $table->timestamps();
         });
     }

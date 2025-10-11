@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('bonuses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->enum('type', ['Festival', 'Motivational'])->default('Motivational');
+            $table->decimal('amount', 12, 2)->default(0);
+            $table->date('date');
             $table->timestamps();
         });
     }

@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Bonus extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'employee_id',
+        'type',
+        'amount',
+        'date',
+    ];
+
+    protected $casts = [
+        'date' => 'date',
+    ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }
