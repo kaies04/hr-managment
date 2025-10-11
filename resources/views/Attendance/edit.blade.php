@@ -8,57 +8,45 @@
                 <h2>Edit Attendance</h2>
             </div>
             <div class="card-body">
-                <form action="{{ route('attendance.update', $attendance->id) }}" method="POST">
+                <form action="{{ route('attendance.store') }}" method="POST">
                     @csrf
-                    @method('PUT')
-
-                    {{-- Employee Dropdown --}}
-                    <div class="form-group">
-                        <label for="employee_id">Employee</label>
-                        <select class="form-control" id="employee_id" name="employee_id" required>
-                            <option value="">Select Employee</option>
-                            @foreach($employees as $employee)
-                                <option value="{{ $employee->id }}" 
-                                    {{ $attendance->employee_id == $employee->id ? 'selected' : '' }}>
-                                    {{ $employee->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     {{-- Date --}}
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <input type="date" class="form-control" id="date" name="date" 
-                               value="{{ $attendance->date->format('Y-m-d') }}" required>
+                        <input type="date" class="form-control" id="date" name="date"
+                               value="{{ $attendance->date }}" required>
                     </div>
 
-                    {{-- Status --}}
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="form-control" id="status" name="status" required>
-                            <option value="">Select Status</option>
-                            <option value="Present" {{ $attendance->status == 'Present' ? 'selected' : '' }}>Present</option>
-                            <option value="Absent" {{ $attendance->status == 'Absent' ? 'selected' : '' }}>Absent</option>
-                            <option value="Leave" {{ $attendance->status == 'Leave' ? 'selected' : '' }}>Leave</option>
-                            <option value="Late" {{ $attendance->status == 'Late' ? 'selected' : '' }}>Late</option>
-                            <option value="Half-day" {{ $attendance->status == 'Half-day' ? 'selected' : '' }}>Half-day</option>
-                        </select>
-                    </div>
+                    {{-- Employee Dropdown --}}
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Name</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>Status</th>
+                        </tr>
+                        @forelse ($employees as $emp)
+                        <tr>
+                            <td>
+                                {{ $emp->name }}
+                                <input type="hidden" name="employee_id[{{ $emp->id }}]" value="{{ $emp->id }}">
+                            </td>
+                            <td><input type="time" name="check_in[{{$emp->id}}]" id="check_in_{{ $emp->id }}" class="form-control"></td>
+                            <td><input type="time" name="check_out[{{$emp->id}}]" id="check_out_{{ $emp->id }}" class="form-control"></td>
+                            <td>
+                                <select name="status[{{$emp->id}}]" id="status_{{ $emp->id }}" class="form-control" required>
+                                    <option value="0">Present</option>
+                                    <option value="1">Absent</option>
+                                    <option value="2">Leave</option>
+                                    <option value="3">Late</option>
+                                    <option value="4">Half-day</option>
+                                </select>
+                            </td>
+                        </tr>
+                        @empty
 
-                    {{-- Check In --}}
-                    <div class="form-group">
-                        <label for="check_in">Check In</label>
-                        <input type="time" class="form-control" id="check_in" name="check_in" 
-                               value="{{ $attendance->check_in ? $attendance->check_in->format('H:i') : '' }}">
-                    </div>
-
-                    {{-- Check Out --}}
-                    <div class="form-group">
-                        <label for="check_out">Check Out</label>
-                        <input type="time" class="form-control" id="check_out" name="check_out" 
-                               value="{{ $attendance->check_out ? $attendance->check_out->format('H:i') : '' }}">
-                    </div>
+                        @endforelse
+                    </table>
 
                     <button type="submit" class="btn btn-primary">Update Attendance</button>
                 </form>
@@ -67,4 +55,24 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    window.onload = function() {
+        const date = document.getElementById('date').value;
+        @foreach ($employees as $emp)
+            fetch(`{{ route('attendancegetAttendance', ['employeeId' => $emp->id]) }}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.getElementById('check_in_{{ $emp->id }}').value = data.check_in ? data.check_in : '';
+                        document.getElementById('check_out_{{ $emp->id }}').value = data.check_out ? data.check_out : '';
+                        document.getElementById('status_{{ $emp->id }}').value = data.status;
+                    }
+                })
+                .catch(error => console.error('Error fetching attendance:', error));
+        @endforeach
+    };
+</script>
+@endpush
 

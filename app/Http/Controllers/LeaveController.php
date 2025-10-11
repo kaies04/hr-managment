@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Leave;
+use App\Models\LeaveDetail;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
@@ -12,7 +14,7 @@ class LeaveController extends Controller
      */
     public function index()
     {
-          $data = Leave::with('employee')->get();
+        $data = Leave::with('employee')->get();
         return view('leave.index', compact('data'));
     }
 
@@ -21,7 +23,7 @@ class LeaveController extends Controller
      */
     public function create()
     {
-         $employees = Employee::all();
+        $employees = Employee::all();
         return view('leave.create', compact('employees'));
     }
 
@@ -32,22 +34,37 @@ class LeaveController extends Controller
     {
          $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'leave_type'  => 'required|in:Casual,Sick,Unpaid',
+            'leave_type'  => 'required',
             'start_date'  => 'required|date',
             'end_date'    => 'required|date|after_or_equal:start_date',
-            'status'      => 'required|in:Pending,Approved,Rejected',
+            'status'      => 'required',
         ]);
 
-        Leave::create([
+        $leave=Leave::create([
             'employee_id' => $request->employee_id,
             'leave_type'  => $request->leave_type,
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
             'status'      => $request->status,
+            'company_id'  => auth()->user()->company_id,
         ]);
+        if($leave){
+            $start = strtotime($request->start_date);
+            $end = strtotime($request->end_date);
+
+            for ($date = $start; $date <= $end; $date += 86400) {
+                LeaveDetail::create([
+                    'company_id' => auth()->user()->company_id,
+                    'employee_id' => $request->employee_id,
+                    'leave_type' => $request->leave_type,
+                    'date' => date('Y-m-d', $date),
+                    'status' => $request->status,
+                ]);
+            }
+        }
 
         return redirect()->route('leave.index')->with('success', 'Leave created successfully.');
-   
+
     }
 
     /**
@@ -74,12 +91,12 @@ class LeaveController extends Controller
     {
          $request->validate([
             'employee_id' => 'required|exists:employees,id',
-            'leave_type'  => 'required|in:Casual,Sick,Unpaid',
+            'leave_type'  => 'required',
             'start_date'  => 'required|date',
             'end_date'    => 'required|date|after_or_equal:start_date',
-            'status'      => 'required|in:Pending,Approved,Rejected',
+            'status'      => 'required',
         ]);
-
+        $leaveData=$leave;
         $leave->update([
             'employee_id' => $request->employee_id,
             'leave_type'  => $request->leave_type,
@@ -88,8 +105,29 @@ class LeaveController extends Controller
             'status'      => $request->status,
         ]);
 
+        if($leaveData->start_date != $request->start_date || $leaveData->end_date != $request->end_date || $leaveData->status != $request->status || $leaveData->employee_id != $request->employee_id || $leaveData->leave_type != $request->leave_type){
+            // Delete old leave details
+            LeaveDetail::where('employee_id', $leaveData->employee_id)
+                ->whereBetween('date', [$leaveData->start_date, $leaveData->end_date])
+                ->delete();
+
+            // Create new leave details
+            $start = strtotime($request->start_date);
+            $end = strtotime($request->end_date);
+
+            for ($date = $start; $date <= $end; $date += 86400) {
+                LeaveDetail::create([
+                    'company_id' => auth()->user()->company_id,
+                    'employee_id' => $request->employee_id,
+                    'leave_type' => $request->leave_type,
+                    'date' => date('Y-m-d', $date),
+                    'status' => $request->status,
+                ]);
+            }
+        }
+
         return redirect()->route('leave.index')->with('success', 'Leave updated successfully.');
-    
+
     }
 
     /**
@@ -99,6 +137,6 @@ class LeaveController extends Controller
     {
         $leave->delete();
         return redirect()->route('leave.index')->with('success', 'Leave deleted successfully.');
-   
+
     }
 }

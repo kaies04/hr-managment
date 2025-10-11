@@ -9,7 +9,7 @@
                 <a class="btn btn-primary btn-sm" href="{{ route('leave.create') }}">Add Leave</a>
             </div>
             <div class="card-body">
-                <table id="leavesTable" class="table table-hover table-product" style="width:100%">
+                <table id="leavesTable" class="table table-product" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('provident_funds', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->string('month');
             $table->year('year');

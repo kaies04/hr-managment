@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('leave_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
-            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('employee_id');
+            $table->integer('leave_type')->default('0')->comment('0: Casual, 1: Sick, 2: Unpaid');
             $table->date('date');
-            $table->integer('status')->default(0)->comment('0: Present, 1: Absent, 2: Leave, 3: Late, 4: Half-day');
-            $table->time('check_in')->nullable();
-            $table->time('check_out')->nullable();
+            $table->integer('status')->default('0')->comment('0: Pending, 1: Approved, 2: Rejected');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('leave_details');
     }
 };

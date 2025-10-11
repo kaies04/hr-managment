@@ -10,12 +10,12 @@ use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\DepartmentController;
-// use App\Http\Controllers\AttendanceController;
-// use App\Http\Controllers\LeaveController;
-// use App\Http\Controllers\PayrollController;
-// use App\Http\Controllers\ProvidentFundController;
-// use App\Http\Controllers\LoanController;
-// use App\Http\Controllers\BonusController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\ProvidentFundController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\BonusController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -58,23 +58,25 @@ Route::middleware('auth:web')->group(function () {
 
 
 
-    //  // Attendance CRUD routes
-    // Route::resource('attendances', AttendanceController::class);
+     // Attendance CRUD routes
+    Route::resource('attendance', AttendanceController::class);
+    Route::get('check-leave', [AttendanceController::class, 'checkLeave'])->name('attendancecheckLeave');
+    Route::get('get-attendance', [AttendanceController::class, 'getAttendanceByDate'])->name('attendancegetAttendance');
 
-    // // Leave CRUD routes
-    // Route::resource('leaves', LeaveController::class);
+    // Leave CRUD routes
+    Route::resource('leave', LeaveController::class);
 
-    // // Payroll CRUD routes
-    // Route::resource('payrolls', PayrollController::class);
+    // Payroll CRUD routes
+    Route::resource('payroll', PayrollController::class);
 
-    // // Provident Fund CRUD routes
-    // Route::resource('provident-funds', ProvidentFundController::class);
+    // Provident Fund CRUD routes
+    Route::resource('provident-fund', ProvidentFundController::class);
 
-    // // Loan CRUD routes
-    // Route::resource('loans', LoanController::class);
+    // Loan CRUD routes
+    Route::resource('loan', LoanController::class);
 
-    // // Bonus CRUD routes
-    // Route::resource('bonuses', BonusController::class);
+    // Bonus CRUD routes
+    Route::resource('bonus', BonusController::class);
 
 
 });

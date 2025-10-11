@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Employee;
+use App\Models\LeaveDetail;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+    */
     public function index()
     {
-          $data = Attendance::with('employee')
-            ->where('company_id', auth()->user()->company_id ?? null)
-            ->get();
+          $data = Attendance::where('company_id', auth()->user()->company_id)
+                            ->groupBy('date')
+                            ->get();
         return view('attendance.index', compact('data'));
     }
 
@@ -23,7 +25,7 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-         $employees = Employee::all();
+        $employees = Employee::all();
         return view('attendance.create', compact('employees'));
     }
 
@@ -33,23 +35,25 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'employee_id' => 'required|exists:employees,id',
-            'date' => 'required|date',
-            'status' => 'required|in:Present,Absent,Leave,Late,Half-day',
-            'check_in' => 'nullable|date_format:H:i',
-            'check_out' => 'nullable|date_format:H:i|after_or_equal:check_in',
+            'date' => 'required|date'
         ]);
 
-        Attendance::create([
-            'employee_id' => $request->employee_id,
-            'date' => $request->date,
-            'status' => $request->status,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-        ]);
-
+        foreach($request->employee_id as $key => $employeeId) {
+            Attendance::updateOrCreate(
+                [
+                    'employee_id' => $employeeId,
+                    'date' => $request->date,
+                ],
+                [
+                    'company_id' => auth()->user()->company_id,
+                    'status' => $request->status[$key],
+                    'check_in' => $request->check_in[$key] ?? null,
+                    'check_out' => $request->check_out[$key] ?? null,
+                ]
+            );
+        }
         return redirect()->route('attendance.index')->with('success', 'Attendance created successfully.');
-    
+
     }
 
     /**
@@ -57,7 +61,11 @@ class AttendanceController extends Controller
      */
     public function show(Attendance $attendance)
     {
-        //
+        $attendances = Attendance::where('date', $attendance->date)
+                                ->where('company_id', auth()->user()->company_id)
+                                ->with('employee')
+                                ->get();
+        return view('attendance.show', compact('attendances', 'attendance'));
     }
 
     /**
@@ -65,7 +73,7 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-           $employees = Employee::all();
+        $employees = Employee::all();
         return view('attendance.edit', compact('attendance', 'employees'));
     }
 
@@ -74,24 +82,7 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, Attendance $attendance)
     {
-         $request->validate([
-            'employee_id' => 'required|exists:employees,id',
-            'date' => 'required|date',
-            'status' => 'required|in:Present,Absent,Leave,Late,Half-day',
-            'check_in' => 'nullable|date_format:H:i',
-            'check_out' => 'nullable|date_format:H:i|after_or_equal:check_in',
-        ]);
-
-        $attendance->update([
-            'employee_id' => $request->employee_id,
-            'date' => $request->date,
-            'status' => $request->status,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-        ]);
-
-        return redirect()->route('attendance.index')->with('success', 'Attendance updated successfully.');
-    
+         //
     }
 
     /**
@@ -99,7 +90,37 @@ class AttendanceController extends Controller
      */
     public function destroy(Attendance $attendance)
     {
-        $attendance->delete();
+        Attendance::where('date', $attendance->date)
+                    ->where('company_id', auth()->user()->company_id)
+                    ->delete();
         return redirect()->route('attendance.index')->with('success', 'Attendance deleted successfully.');
+    }
+
+    public function checkLeave(Request $request)
+    {
+        $employeeId = $request->input('employeeId');
+        $date = $request->input('date');
+
+        $Leave = LeaveDetail::where('employee_id', $employeeId)
+                                ->where('date', $date)
+                                ->first();
+
+        if ($Leave) {
+            return response()->json(['status' => $Leave->status, 'leave_type' => $Leave->leave_type]);
+        } else {
+            return response()->json(['status' => 0, 'leave_type' => null]);
+        }
+    }
+
+    public function getAttendanceByDate(Request $request)
+    {
+        $date = $request->input('date');
+        $employeeId = $request->input('employeeId');
+
+        $attendanceRecords = Attendance::where('date', $date)
+                                        ->where('employee_id', $employeeId)
+                                        ->first();
+
+        return response()->json($attendanceRecords);
     }
 }

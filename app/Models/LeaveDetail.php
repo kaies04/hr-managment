@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class LeaveDetail extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'company_id',
+        'employee_id',
+        'leave_type',
+        'date',
+        'status',
+    ];
+}

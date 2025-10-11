@@ -26,9 +26,9 @@
                     <div class="form-group">
                         <label for="leave_type">Leave Type</label>
                         <select name="leave_type" id="leave_type" class="form-control" required>
-                            <option value="Casual">Casual</option>
-                            <option value="Sick">Sick</option>
-                            <option value="Unpaid">Unpaid</option>
+                            <option value="0">Casual</option>
+                            <option value="1">Sick</option>
+                            <option value="2">Unpaid</option>
                         </select>
                     </div>
 
@@ -48,9 +48,9 @@
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" required>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
+                            <option value="0">Pending</option>
+                            <option value="1">Approved</option>
+                            <option value="2">Rejected</option>
                         </select>
                     </div>
 

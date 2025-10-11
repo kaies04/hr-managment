@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id');
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
-            $table->enum('leave_type', ['Casual', 'Sick', 'Unpaid'])->default('Casual');
+            $table->integer('leave_type')->default('0')->comment('0: Casual, 1: Sick, 2: Unpaid');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+            $table->integer('status')->default('0')->comment('0: Pending, 1: Approved, 2: Rejected');
             $table->timestamps();
         });
     }

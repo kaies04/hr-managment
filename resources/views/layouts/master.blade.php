@@ -143,7 +143,7 @@
 
                     </a>
                   </li>
-                  {{-- <li>
+                  <li>
                     <a class="sidenav-item-link" href="{{route('attendance.index')}}">
                       <span class="nav-text">attendance</span>
 
@@ -174,11 +174,11 @@
                     </a>
                   </li>
                    <li>
-                    <a class="sidenav-item-link" href="{{route('providentfund.index')}}">
-                      <span class="nav-text">providentfund</span>
+                    <a class="sidenav-item-link" href="{{route('provident-fund.index')}}">
+                      <span class="nav-text">Provident-fund</span>
 
                     </a>
-                  </li> --}}
+                  </li>
                 </div>
               </ul>
             </li>
@@ -2544,7 +2544,7 @@
   <script src="{{asset('assets/js/custom.js')}}"></script>
 
 
-
+@stack('scripts')
 
   <!--  -->
 
