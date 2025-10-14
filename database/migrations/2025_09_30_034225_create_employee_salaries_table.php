@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee__salaries', function (Blueprint $table) {
+        Schema::create('employee_salaries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee__salaries');
+        Schema::dropIfExists('employee_salaries');
     }
 };

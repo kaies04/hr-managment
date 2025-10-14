@@ -68,6 +68,8 @@ Route::middleware('auth:web')->group(function () {
 
     // Payroll CRUD routes
     Route::resource('payroll', PayrollController::class);
+    Route::get('get-employee-absent', [PayrollController::class, 'get_employee_absent'])->name('get_employee_absent');
+    Route::get('monthly-loan-deduction', [PayrollController::class, 'monthly_loan_deduction'])->name('monthly_loan_deduction');
 
     // Provident Fund CRUD routes
     Route::resource('provident-fund', ProvidentFundController::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loan;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller
@@ -34,7 +35,6 @@ class LoanController extends Controller
             'employee_id'         => 'required|exists:employees,id',
             'loan_amount'         => 'required|numeric|min:0',
             'monthly_installment' => 'required|numeric|min:0',
-            'remaining_balance'   => 'required|numeric|min:0',
             'start_date'          => 'required|date',
             'status'              => 'required|in:Active,Cleared',
         ]);
@@ -43,8 +43,10 @@ class LoanController extends Controller
             'employee_id'         => $request->employee_id,
             'loan_amount'         => $request->loan_amount,
             'monthly_installment' => $request->monthly_installment,
-            'remaining_balance'   => $request->remaining_balance,
+            'remaining_balance'   => $request->loan_amount,
             'start_date'          => $request->start_date,
+            'finish_date'         => $request->finish_date,
+            'number_of_installment'=> $request->number_of_installment,
             'status'              => $request->status,
         ]);
 
@@ -89,6 +91,9 @@ class LoanController extends Controller
             'monthly_installment' => $request->monthly_installment,
             'remaining_balance'   => $request->remaining_balance,
             'start_date'          => $request->start_date,
+            'finish_date'         => $request->finish_date,
+            'number_of_installment'=> $request->number_of_installment,
+            'actual_finish_date'  => $request->actual_finish_date,
             'status'              => $request->status,
         ]);
 

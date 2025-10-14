@@ -12,7 +12,7 @@ class BonusController extends Controller
      */
     public function index()
     {
-         $data = Leave::with('employee')->get();
+         $data = Bonus::with('employee')->get();
         return view('leave.index', compact('data'));
     }
 
@@ -38,7 +38,7 @@ class BonusController extends Controller
             'status'      => 'required|in:Pending,Approved,Rejected',
         ]);
 
-        Leave::create([
+        Bonus::create([
             'employee_id' => $request->employee_id,
             'leave_type'  => $request->leave_type,
             'start_date'  => $request->start_date,
@@ -80,7 +80,7 @@ class BonusController extends Controller
             'status'      => 'required|in:Pending,Approved,Rejected',
         ]);
 
-        $leave->update([
+        $bonus->update([
             'employee_id' => $request->employee_id,
             'leave_type'  => $request->leave_type,
             'start_date'  => $request->start_date,
@@ -97,7 +97,7 @@ class BonusController extends Controller
      */
     public function destroy(Bonus $bonus)
     {
-         $leave->delete();
+        $bonus->delete();
         return redirect()->route('leave.index')->with('success', 'Leave deleted successfully.');
     }
 }

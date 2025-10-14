@@ -32,6 +32,12 @@
                         <input type="number" step="0.01" class="form-control" id="loan_amount" name="loan_amount"
                                value="{{ $loan->loan_amount }}" required>
                     </div>
+                    {{-- Number of Installments --}}
+                    <div class="form-group">
+                        <label for="number_of_installment">Number of Installments</label>
+                        <input type="number" step="0.01" class="form-control" id="number_of_installment" 
+                               name="number_of_installment" value="{{ $loan->number_of_installment }}" required>
+                    </div>
 
                     {{-- Monthly Installment --}}
                     <div class="form-group">
@@ -53,6 +59,19 @@
                         <input type="date" class="form-control" id="start_date" name="start_date" 
                                value="{{ $loan->start_date->format('Y-m-d') }}" required>
                     </div>
+                    {{-- Finish Date --}}
+                    <div class="form-group">
+                        <label for="finish_date">Finish Date</label>
+                        <input type="date" class="form-control" id="finish_date" name="finish_date" 
+                               value="{{ $loan->finish_date }}" required>
+                    </div>
+                    {{-- Actual Finish Date --}}
+                    <div class="form-group">
+                        <label for="actual_finish_date">Actual Finish Date</label>
+                        <input type="date" class="form-control" id="actual_finish_date" name="actual_finish_date" 
+                               value="{{ $loan->actual_finish_date }}">
+                    </div>
+
 
                     {{-- Status --}}
                     <div class="form-group">

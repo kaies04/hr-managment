@@ -14,6 +14,9 @@ class Loan extends Model
         'monthly_installment',
         'remaining_balance',
         'start_date',
+        'number_of_installment',
+        'finish_date',
+        'actual_finish_date',
         'status',
     ];
 

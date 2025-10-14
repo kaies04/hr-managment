@@ -17,11 +17,16 @@
                             <th>Month</th>
                             <th>Year</th>
                             <th>Basic Salary</th>
+                            <th>Absent</th>
+                            <th>Absent Deductions</th>
+                            <th>Loan Deductions</th>
                             <th>Allowances</th>
-                            <th>Deductions</th>
                             <th>Bonuses</th>
                             <th>Net Salary</th>
-                            <th>Generated At</th>
+                            <th>Payment Status</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+                            <th>Generated</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -33,11 +38,16 @@
                             <td>{{ $payroll->month }}</td>
                             <td>{{ $payroll->year }}</td>
                             <td>{{ $payroll->basic_salary }}</td>
+                            <td>{{ $payroll->total_absent }}</td>
+                            <td>{{ $payroll->deduction_for_absent }}</td>
+                            <td>{{ $payroll->loan_deduction }}</td>
                             <td>{{ $payroll->allowances }}</td>
-                            <td>{{ $payroll->deductions }}</td>
                             <td>{{ $payroll->bonuses }}</td>
                             <td>{{ $payroll->net_salary }}</td>
-                            <td>{{ $payroll->generated_at ? $payroll->generated_at->format('d M Y H:i') : 'N/A' }}</td>
+                            <td>{{ $payroll->payment_status }}</td>
+                            <td>{{ $payroll->status }}</td>
+                            <td>{{ $payroll->remarks }}</td>
+                            <td>{{ $payroll->created_at ? $payroll->created_at->format('d M Y H:i') : 'N/A' }}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
@@ -45,6 +55,7 @@
                                        aria-expanded="false">
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="{{ route('payroll.show', $payroll->id) }}">Show</a>
                                         <a class="dropdown-item" href="{{ route('payroll.edit', $payroll->id) }}">Edit</a>
                                         <form action="{{ route('payroll.destroy', $payroll->id) }}" method="POST" class="d-inline">
                                             @csrf
